@@ -1,5 +1,6 @@
 package br.com.stormtest.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -29,6 +30,7 @@ public class ContentDetail extends AppCompatActivity implements YouTubePlayer.On
     private Content content;
     private ImageView shelfImage;
     private TextView contentTitle, contentDescription, tagHeader, tagHolder, relatedHeader;
+    private ImageView shareContent;
     private LinearLayout horizontalScroll;
 
     private final String YOUTUBE_KEY = "AIzaSyBC0pZE8enJMRQd6_9msFvtNznhx5RwoI0";
@@ -44,8 +46,6 @@ public class ContentDetail extends AppCompatActivity implements YouTubePlayer.On
 
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-
         }
 
         if (getIntent() != null) {
@@ -63,6 +63,7 @@ public class ContentDetail extends AppCompatActivity implements YouTubePlayer.On
         tagHolder = (TextView) findViewById(R.id.tagHolder);
         horizontalScroll = (LinearLayout) findViewById(R.id.relatedContentScroll);
         relatedHeader = (TextView) findViewById(R.id.relatedVideosHeader);
+        shareContent = (ImageView) findViewById(R.id.shareContent);
 
         YouTubePlayerSupportFragment fragment = (YouTubePlayerSupportFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.videoHolder);
@@ -109,6 +110,19 @@ public class ContentDetail extends AppCompatActivity implements YouTubePlayer.On
             relatedHeader.setVisibility(View.GONE);
             horizontalScroll.setVisibility(View.GONE);
         }
+
+        shareContent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_SUBJECT, content.getContentTitle());
+                String extraText = content.getContentURL();
+                sendIntent.putExtra(Intent.EXTRA_TEXT, extraText);
+                sendIntent.setType("text/plain");
+                startActivity(Intent.createChooser(sendIntent, getString(R.string.share_with)));
+            }
+        });
 
 
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
