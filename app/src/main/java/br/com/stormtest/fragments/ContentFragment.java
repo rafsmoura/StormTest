@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +12,8 @@ import java.util.List;
 
 import br.com.stormtest.R;
 import br.com.stormtest.adapters.RecyclerViewAdapter;
+import br.com.stormtest.cache.CacheManager;
 import br.com.stormtest.models.Content;
-import br.com.stormtest.presenters.ContentPresenter;
 
 public class ContentFragment extends Fragment {
 
@@ -24,6 +23,7 @@ public class ContentFragment extends Fragment {
     private RecyclerView.LayoutManager layoutManager;
 
     private List<Content> contents;
+    private boolean isFavoriteFragment = false;
 
 
     public ContentFragment() {
@@ -58,6 +58,15 @@ public class ContentFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (recyclerView != null && isFavoriteFragment) {
+            recyclerViewAdapter.setContents(CacheManager.getInstance().getFavorites(getContext()));
+            recyclerView.getAdapter().notifyDataSetChanged();
+        }
+    }
+
     public List<Content> getContent() {
         return contents;
     }
@@ -65,4 +74,14 @@ public class ContentFragment extends Fragment {
     public void setContent(List<Content> contents) {
         this.contents = contents;
     }
+
+    public boolean isFavoriteFragment() {
+        return isFavoriteFragment;
+    }
+
+    public void setFavoriteFragment(boolean isFavoriteFragment) {
+        this.isFavoriteFragment = isFavoriteFragment;
+    }
+
+
 }

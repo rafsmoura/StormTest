@@ -77,6 +77,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             public void onClick(View v) {
 
                 Intent i = new Intent(context, ContentDetail.class);
+                i.putExtra("Content", content);
                 context.startActivity(i);
             }
         });
@@ -112,5 +113,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public long getItemId(int position) {
         return contents.get(position).hashCode();
+    }
+
+    public List<Content> getContents() {
+        return contents;
+    }
+
+    public void setContents(List<Content> contents) {
+        this.contents = contents;
     }
 }

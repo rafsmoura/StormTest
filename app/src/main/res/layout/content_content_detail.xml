@@ -8,10 +8,63 @@
     tools:context="br.com.stormtest.activities.ContentDetail"
     tools:showIn="@layout/activity_content_detail">
 
-    <TextView
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/contentTitle"
+            android:layout_width="wrap_content"
+            style="@style/TextAppearance.AppCompat.Title"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin" />
+
+
+        <TextView
+            android:id="@+id/descriptionText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:text="@string/large_text" />
+            android:layout_margin="@dimen/text_margin" />
+
+        <TextView
+            android:id="@+id/tagHeader"
+            android:layout_width="wrap_content"
+            style="@style/TextAppearance.AppCompat.Title"
+            android:layout_height="wrap_content"
+            android:text="@string/tag_header_text"
+            android:layout_margin="@dimen/text_margin" />
+
+        <TextView
+            android:id="@+id/tagHolder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin" />
+
+
+        <TextView
+            android:id="@+id/relatedVideosHeader"
+            android:layout_width="wrap_content"
+            style="@style/TextAppearance.AppCompat.Title"
+            android:layout_height="wrap_content"
+            android:text="@string/related_video_header"
+            android:layout_margin="@dimen/text_margin" />
+
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/relatedContentScroll"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+
+            </LinearLayout>
+
+        </HorizontalScrollView>
+
+    </LinearLayout>
 
 </android.support.v4.widget.NestedScrollView>

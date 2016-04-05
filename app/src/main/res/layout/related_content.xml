@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="120dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="3dp"
+    app:cardUseCompatPadding="true"
+    android:layout_height="160dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_margin="8dp"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/relatedImage"
+            android:layout_width="120dp"
+            android:src="@drawable/minion"
+            android:layout_height="70dp" />
+
+        <TextView
+
+            android:id="@+id/relatedTitle"
+            android:layout_width="80dp"
+            android:maxLines="2"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/relatedImage"
+            android:ellipsize="end"
+            android:text="Lula Molusco | Nerdologia 121"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+
+</android.support.v7.widget.CardView>

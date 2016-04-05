@@ -93,7 +93,7 @@
                 style="@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
                 android:layout_toRightOf="@+id/contentImage"
                 android:layout_toEndOf="@+id/contentImage"
-                android:drawableLeft="@drawable/ic_visibility_black_36dp"
+                android:drawableLeft="@drawable/ic_visibility_black_24dp"
                 android:text="@string/content_view_count"/>
 
             <TextView
@@ -108,7 +108,7 @@
                 style="@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
                 android:layout_toRightOf="@+id/contentViewCount"
                 android:layout_toEndOf="@+id/contentViewCount"
-                android:drawableLeft="@drawable/ic_favorite_black_36dp"
+                android:drawableLeft="@drawable/ic_favorite_black_24dp"
                 android:text="@string/content_favorite_count"/>
 
         </RelativeLayout>

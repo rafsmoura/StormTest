@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.stormtest.R;
+import br.com.stormtest.cache.CacheManager;
 import br.com.stormtest.fragments.ContentFragment;
 import br.com.stormtest.models.Content;
 
@@ -42,7 +43,7 @@ public class ContentFragmentAdapter extends FragmentPagerAdapter {
             }
         }
 
-        //Lógica para favoritos...
+        favoriteList = CacheManager.getInstance().getFavorites(context);
     }
 
     @Override
@@ -55,7 +56,8 @@ public class ContentFragmentAdapter extends FragmentPagerAdapter {
         } else if (position == 1) {
             contentFragment.setContent(articleList);
         } else if (position == 2) {
-            contentFragment.setContent(contentList);
+            contentFragment.setContent(favoriteList);
+            contentFragment.setFavoriteFragment(true);
         }
 
 

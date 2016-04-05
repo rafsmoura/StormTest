@@ -3,10 +3,14 @@ package br.com.stormtest.models;
 /**
  * Created by root on 04/04/16.
  */
+
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class User {
+public class User implements Parcelable {
 
     @SerializedName("Id")
     @Expose
@@ -80,4 +84,38 @@ public class User {
                 ", UserProfilePhoto='" + UserProfilePhoto + '\'' +
                 '}';
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(this.Id);
+        dest.writeString(this.UserName);
+        dest.writeString(this.UserProfilePhoto);
+    }
+
+    public User() {
+    }
+
+    protected User(Parcel in) {
+        this.Id = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.UserName = in.readString();
+        this.UserProfilePhoto = in.readString();
+    }
+
+    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel source) {
+            return new User(source);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 }

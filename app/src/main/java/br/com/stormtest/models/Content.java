@@ -3,12 +3,17 @@ package br.com.stormtest.models;
 /**
  * Created by root on 04/04/16.
  */
-import java.util.ArrayList;
-import java.util.List;
+
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Content {
+import java.util.ArrayList;
+import java.util.List;
+
+public class Content implements Parcelable {
 
     @SerializedName("Id")
     @Expose
@@ -46,6 +51,7 @@ public class Content {
     @SerializedName("User")
     @Expose
     private User User;
+
 
     /**
      *
@@ -280,4 +286,57 @@ public class Content {
                 ", User=" + User +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(this.Id);
+        dest.writeString(this.ContentTitle);
+        dest.writeString(this.ContentURL);
+        dest.writeString(this.ShelfImage);
+        dest.writeValue(this.Likes);
+        dest.writeValue(this.ViewCount);
+        dest.writeString(this.Type);
+        dest.writeList(this.Tags);
+        dest.writeString(this.ShortDescription);
+        dest.writeString(this.Description);
+        dest.writeList(this.RelatedVideos);
+        dest.writeParcelable(this.User, flags);
+    }
+
+    public Content() {
+    }
+
+    protected Content(Parcel in) {
+        this.Id = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.ContentTitle = in.readString();
+        this.ContentURL = in.readString();
+        this.ShelfImage = in.readString();
+        this.Likes = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.ViewCount = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.Type = in.readString();
+        this.Tags = new ArrayList<Tag>();
+        in.readList(this.Tags, Tag.class.getClassLoader());
+        this.ShortDescription = in.readString();
+        this.Description = in.readString();
+        this.RelatedVideos = new ArrayList<Object>();
+        in.readList(this.RelatedVideos, Object.class.getClassLoader());
+        this.User = in.readParcelable(br.com.stormtest.models.User.class.getClassLoader());
+    }
+
+    public static final Parcelable.Creator<Content> CREATOR = new Parcelable.Creator<Content>() {
+        @Override
+        public Content createFromParcel(Parcel source) {
+            return new Content(source);
+        }
+
+        @Override
+        public Content[] newArray(int size) {
+            return new Content[size];
+        }
+    };
 }
