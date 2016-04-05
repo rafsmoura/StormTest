@@ -2,15 +2,21 @@ package br.com.stormtest.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayerSupportFragment;
 import com.squareup.picasso.Picasso;
 
 import br.com.stormtest.R;
@@ -18,12 +24,14 @@ import br.com.stormtest.cache.CacheManager;
 import br.com.stormtest.models.Content;
 import br.com.stormtest.models.Tag;
 
-public class ContentDetail extends AppCompatActivity {
+public class ContentDetail extends AppCompatActivity implements YouTubePlayer.OnInitializedListener {
 
     private Content content;
     private ImageView shelfImage;
     private TextView contentTitle, contentDescription, tagHeader, tagHolder, relatedHeader;
     private LinearLayout horizontalScroll;
+
+    private final String YOUTUBE_KEY = "AIzaSyBC0pZE8enJMRQd6_9msFvtNznhx5RwoI0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +63,15 @@ public class ContentDetail extends AppCompatActivity {
         tagHolder = (TextView) findViewById(R.id.tagHolder);
         horizontalScroll = (LinearLayout) findViewById(R.id.relatedContentScroll);
         relatedHeader = (TextView) findViewById(R.id.relatedVideosHeader);
+
+        YouTubePlayerSupportFragment fragment = (YouTubePlayerSupportFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.videoHolder);
+
+        if (TextUtils.equals(content.getType(), "Video")) {
+            fragment.initialize(YOUTUBE_KEY, this);
+        } else {
+            fragment.getView().setVisibility(View.GONE);
+        }
 
 
         contentTitle.setText(content.getContentTitle());
@@ -108,14 +125,16 @@ public class ContentDetail extends AppCompatActivity {
                 public void onClick(View view) {
                     boolean isFavorite = CacheManager.getInstance().addToFavorites(getApplicationContext(), content);
 
+                    String msg;
                     if (isFavorite) {
                         fab.setImageResource(R.drawable.ic_favorite_white_24dp);
+                        msg = content.getContentTitle() + " adicionado aos favoritos!";
                     } else {
                         fab.setImageResource(R.drawable.ic_favorite_border_white_24dp);
+                        msg = content.getContentTitle() + " removido dos favoritos!";
                     }
 
-//                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                            .setAction("Action", null).show();
+                    Snackbar.make(view, msg, Snackbar.LENGTH_LONG).show();
                 }
             });
         }
@@ -129,6 +148,18 @@ public class ContentDetail extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean restored) {
+        if (!restored) {
+            youTubePlayer.cueVideo(content.getContentURL());
+        }
+    }
+
+    @Override
+    public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+        Toast.makeText(getApplicationContext(), "Ops! Ocorreu um erro, tente novamente!", Toast.LENGTH_SHORT).show();
     }
 }
 

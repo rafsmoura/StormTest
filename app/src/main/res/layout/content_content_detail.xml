@@ -21,6 +21,16 @@
             android:layout_margin="@dimen/text_margin" />
 
 
+        <fragment
+            android:id="@+id/videoHolder"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:name="com.google.android.youtube.player.YouTubePlayerSupportFragment"
+            android:layout_margin="@dimen/text_margin">
+
+        </fragment>
+
+
         <TextView
             android:id="@+id/descriptionText"
         android:layout_width="wrap_content"
