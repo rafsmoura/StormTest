@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -24,6 +25,7 @@ import java.util.List;
 
 import br.com.stormtest.R;
 import br.com.stormtest.adapters.ContentFragmentAdapter;
+import br.com.stormtest.cache.CacheManager;
 import br.com.stormtest.fragments.ContentFragment;
 import br.com.stormtest.models.Content;
 import br.com.stormtest.presenters.ContentPresenter;
@@ -41,6 +43,8 @@ public class MainActivity extends AppCompatActivity implements ContentPresenter.
     private FrameLayout searchResult;
     private List<Content> contents;
 
+    private final String LOG_TAG = "MainActivity";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +57,18 @@ public class MainActivity extends AppCompatActivity implements ContentPresenter.
 
 
         contentPresenter = new ContentPresenter(this);
-        contentPresenter.getContent();
+
+
+        if (CacheManager.getInstance().savedRequestIsValid(getApplicationContext())) {
+
+            createScreen(CacheManager.getInstance().getContents(getApplicationContext()));
+
+            Log.d(LOG_TAG, "Caiu no cache");
+
+        } else {
+
+            contentPresenter.getContent();
+        }
 
     }
 
@@ -161,15 +176,26 @@ public class MainActivity extends AppCompatActivity implements ContentPresenter.
         contentPresenter.unsubscribe();
     }
 
-    @Override
-    public void getContentReturn(List<Content> content) {
-
+    private void createScreen(List<Content> content) {
         this.contents = content;
+
+        CacheManager.getInstance().saveRequest(getApplicationContext(), content);
 
         cfa = new ContentFragmentAdapter(getSupportFragmentManager(), this, content);
 
         viewPager.setAdapter(cfa);
 
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    @Override
+    public void getContentReturn(List<Content> content) {
+
+        Log.d(LOG_TAG, "Fez request..");
+
+        CacheManager.getInstance().saveRequest(getApplicationContext(), content);
+
+        createScreen(content);
+
     }
 }

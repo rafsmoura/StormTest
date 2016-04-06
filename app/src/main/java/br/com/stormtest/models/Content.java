@@ -21,6 +21,9 @@ public class Content implements Parcelable {
     @SerializedName("ContentTitle")
     @Expose
     private String ContentTitle;
+    @SerializedName("VideoId")
+    @Expose
+    private String VideoId;
     @SerializedName("ContentURL")
     @Expose
     private String ContentURL;
@@ -269,11 +272,20 @@ public class Content implements Parcelable {
         this.User = User;
     }
 
+    public String getVideoId() {
+        return VideoId;
+    }
+
+    public void setVideoId(String videoId) {
+        VideoId = videoId;
+    }
+
     @Override
     public String toString() {
         return "Content{" +
                 "Id=" + Id +
                 ", ContentTitle='" + ContentTitle + '\'' +
+                ", VideoId='" + VideoId + '\'' +
                 ", ContentURL='" + ContentURL + '\'' +
                 ", ShelfImage='" + ShelfImage + '\'' +
                 ", Likes=" + Likes +
@@ -296,6 +308,7 @@ public class Content implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(this.Id);
         dest.writeString(this.ContentTitle);
+        dest.writeString(this.VideoId);
         dest.writeString(this.ContentURL);
         dest.writeString(this.ShelfImage);
         dest.writeValue(this.Likes);
@@ -314,6 +327,7 @@ public class Content implements Parcelable {
     protected Content(Parcel in) {
         this.Id = (Integer) in.readValue(Integer.class.getClassLoader());
         this.ContentTitle = in.readString();
+        this.VideoId = in.readString();
         this.ContentURL = in.readString();
         this.ShelfImage = in.readString();
         this.Likes = (Integer) in.readValue(Integer.class.getClassLoader());

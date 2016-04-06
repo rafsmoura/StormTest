@@ -72,14 +72,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         holder.favoriteCount.setText(Integer.toString(content.getLikes()));
 
-        holder.view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        holder.view.setOnClickListener((View v) -> {
 
                 Intent i = new Intent(context, ContentDetail.class);
                 i.putExtra("Content", content);
                 context.startActivity(i);
-            }
         });
 
     }

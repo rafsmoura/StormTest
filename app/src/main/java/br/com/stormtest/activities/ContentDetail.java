@@ -113,14 +113,12 @@ public class ContentDetail extends AppCompatActivity implements YouTubePlayer.On
                 TextView relatedTitle = (TextView) card.findViewById(R.id.relatedTitle);
                 relatedTitle.setText(related.getContentTitle());
 
-                card.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+                card.setOnClickListener((View v) -> {
+
 
                         Intent i = new Intent(getApplicationContext(), ContentDetail.class);
                         i.putExtra("Content", related);
                         startActivity(i);
-                    }
                 });
 
                 horizontalScroll.addView(card);
@@ -130,9 +128,8 @@ public class ContentDetail extends AppCompatActivity implements YouTubePlayer.On
             horizontalScroll.setVisibility(View.GONE);
         }
 
-        shareContent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        shareContent.setOnClickListener((View v) -> {
+
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
                 sendIntent.putExtra(Intent.EXTRA_SUBJECT, content.getContentTitle());
@@ -140,7 +137,8 @@ public class ContentDetail extends AppCompatActivity implements YouTubePlayer.On
                 sendIntent.putExtra(Intent.EXTRA_TEXT, extraText);
                 sendIntent.setType("text/plain");
                 startActivity(Intent.createChooser(sendIntent, getString(R.string.share_with)));
-            }
+
+
         });
 
 
@@ -153,9 +151,7 @@ public class ContentDetail extends AppCompatActivity implements YouTubePlayer.On
                 fab.setImageResource(R.drawable.ic_favorite_border_white_24dp);
             }
 
-            fab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+            fab.setOnClickListener((View v) -> {
                     boolean isFavorite = CacheManager.getInstance().addToFavorites(getApplicationContext(), content);
 
                     String msg;
@@ -167,9 +163,9 @@ public class ContentDetail extends AppCompatActivity implements YouTubePlayer.On
                         msg = content.getContentTitle() + " removido dos favoritos!";
                     }
 
-                    Snackbar.make(view, msg, Snackbar.LENGTH_LONG).show();
-                }
+                Snackbar.make(v, msg, Snackbar.LENGTH_LONG).show();
             });
+
         }
     }
 
@@ -186,7 +182,7 @@ public class ContentDetail extends AppCompatActivity implements YouTubePlayer.On
     @Override
     public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean restored) {
         if (!restored) {
-            youTubePlayer.cueVideo(content.getContentURL());
+            youTubePlayer.cueVideo(content.getVideoId());
         }
     }
 
