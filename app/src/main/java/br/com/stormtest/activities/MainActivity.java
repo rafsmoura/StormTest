@@ -86,8 +86,6 @@ public class MainActivity extends AppCompatActivity implements ContentPresenter.
             public boolean onMenuItemActionExpand(MenuItem item) {
                 if (item.getItemId() == R.id.action_search) {
                     item.setActionView(searchView);
-                    searchFragment = ContentFragment.newInstance();
-                    searchFragment.setContent(new ArrayList<Content>());
                     setContentVisibility(View.GONE);
 
                 }
@@ -119,32 +117,29 @@ public class MainActivity extends AppCompatActivity implements ContentPresenter.
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
-                    List<Content> found =
-                            Stream.of(contents)
-                                    .filter((c) -> !TextUtils.isEmpty(c.getContentTitle()) &&
-                                            c.getContentTitle().toLowerCase().contains(query.toLowerCase())
-                                            || c.getDescription().toLowerCase().contains(query.toLowerCase()))
-                                    .collect(Collectors.toList());
-
-                    searchFragment.setContent(found);
-
+                    search(query);
                     return true;
                 }
 
                 @Override
                 public boolean onQueryTextChange(String newText) {
-                    List<Content> found =
-                            Stream.of(contents)
-                                    .filter((c) -> !TextUtils.isEmpty(c.getContentTitle()) &&
-                                            c.getContentTitle().toLowerCase().contains(newText.toLowerCase())
-                                            || c.getDescription().toLowerCase().contains(newText.toLowerCase()))
-                                    .collect(Collectors.toList());
-
-                    searchFragment.setContent(found);
+                    search(newText);
                     return false;
                 }
             });
         }
+    }
+
+    private void search(String text) {
+        List<Content> found =
+                Stream.of(contents)
+                        .filter((c) ->
+                                        c.getContentTitle().toLowerCase().contains(text.toLowerCase())
+                                                || c.getDescription().toLowerCase().contains(text.toLowerCase())
+                        )
+                        .collect(Collectors.toList());
+
+        if (!TextUtils.isEmpty(text)) searchFragment.setContent(found);
     }
 
 
@@ -156,6 +151,8 @@ public class MainActivity extends AppCompatActivity implements ContentPresenter.
             searchResult.setVisibility(View.VISIBLE);
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction ft = fm.beginTransaction();
+            searchFragment = ContentFragment.newInstance();
+            searchFragment.setContent(new ArrayList<>());
             ft.replace(R.id.searchResult, searchFragment);
             ft.commit();
         } else {

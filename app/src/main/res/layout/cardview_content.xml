@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:elevation="3dp"
     app:cardUseCompatPadding="true"
-    android:layout_height="250dp">
+    android:layout_height="220dp">
 
     <LinearLayout
         android:layout_marginTop="10dp"
@@ -30,6 +30,8 @@
             android:id="@+id/userName"
             android:layout_width="match_parent"
             android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:textSize="16sp"
             android:layout_height="wrap_content"
             style="@style/TextAppearance.AppCompat.Title"
             android:text="@string/content_title"/>
@@ -44,7 +46,7 @@
 
             <ImageView
                 android:id="@+id/contentImage"
-                android:layout_width="100dp"
+                android:layout_width="120dp"
                 android:src="@drawable/minion"
                 android:layout_height="100dp"/>
 
@@ -86,11 +88,13 @@
 
             <TextView
                 android:id="@+id/contentViewCount"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="16dp"
                 android:layout_below="@id/contentShotdescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:textSize="12sp"
+                android:layout_marginLeft="45dp"
                 android:drawablePadding="5dp"
                 style="@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
                 android:layout_toRightOf="@+id/contentImage"
@@ -100,11 +104,12 @@
 
             <TextView
                 android:id="@+id/contentFavoriteCount"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="16dp"
                 android:layout_below="@id/contentShotdescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:textSize="12sp"
                 android:drawablePadding="5dp"
                 android:layout_marginLeft="10dp"
                 style="@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
