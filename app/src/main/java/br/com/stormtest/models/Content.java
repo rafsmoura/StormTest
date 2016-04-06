@@ -47,7 +47,7 @@ public class Content implements Parcelable {
     private String Description;
     @SerializedName("RelatedVideos")
     @Expose
-    private List<Object> RelatedVideos = new ArrayList<Object>();
+    private List<Content> RelatedVideos = new ArrayList<Content>();
     @SerializedName("User")
     @Expose
     private User User;
@@ -238,7 +238,7 @@ public class Content implements Parcelable {
      * @return
      * The RelatedVideos
      */
-    public List<Object> getRelatedVideos() {
+    public List<Content> getRelatedVideos() {
         return RelatedVideos;
     }
 
@@ -247,7 +247,7 @@ public class Content implements Parcelable {
      * @param RelatedVideos
      * The RelatedVideos
      */
-    public void setRelatedVideos(List<Object> RelatedVideos) {
+    public void setRelatedVideos(List<Content> RelatedVideos) {
         this.RelatedVideos = RelatedVideos;
     }
 
@@ -323,8 +323,8 @@ public class Content implements Parcelable {
         in.readList(this.Tags, Tag.class.getClassLoader());
         this.ShortDescription = in.readString();
         this.Description = in.readString();
-        this.RelatedVideos = new ArrayList<Object>();
-        in.readList(this.RelatedVideos, Object.class.getClassLoader());
+        this.RelatedVideos = new ArrayList<Content>();
+        in.readList(this.RelatedVideos, Content.class.getClassLoader());
         this.User = in.readParcelable(br.com.stormtest.models.User.class.getClassLoader());
     }
 

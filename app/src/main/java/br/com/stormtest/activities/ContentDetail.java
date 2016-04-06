@@ -100,9 +100,18 @@ public class ContentDetail extends AppCompatActivity implements YouTubePlayer.On
 
         if (content.getRelatedVideos() != null && content.getRelatedVideos().size() > 0) {
 
-            for (Object related : content.getRelatedVideos()) {
+            for (Content related : content.getRelatedVideos()) {
 
                 View card = LayoutInflater.from(this).inflate(R.layout.related_content, null);
+                card.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        Intent i = new Intent(getApplicationContext(), ContentDetail.class);
+                        i.putExtra("Content", related);
+                        startActivity(i);
+                    }
+                });
 
                 horizontalScroll.addView(card);
             }
