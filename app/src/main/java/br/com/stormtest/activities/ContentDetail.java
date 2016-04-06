@@ -103,6 +103,16 @@ public class ContentDetail extends AppCompatActivity implements YouTubePlayer.On
             for (Content related : content.getRelatedVideos()) {
 
                 View card = LayoutInflater.from(this).inflate(R.layout.related_content, null);
+                ImageView relatedImage = (ImageView) card.findViewById(R.id.relatedImage);
+
+                Picasso.with(getApplicationContext())
+                        .load(related.getShelfImage())
+                        .fit()
+                        .into(relatedImage);
+
+                TextView relatedTitle = (TextView) card.findViewById(R.id.relatedTitle);
+                relatedTitle.setText(related.getContentTitle());
+
                 card.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

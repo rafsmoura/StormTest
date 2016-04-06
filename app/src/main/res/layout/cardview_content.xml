@@ -70,6 +70,8 @@
                     android:layout_toEndOf="@+id/contentImage"
                     android:layout_marginTop="5dp"
                     android:layout_marginLeft="5dp"
+                    android:maxLines="3"
+                    android:ellipsize="end"
                     style="@style/Base.TextAppearance.AppCompat.Body1"
                     android:text="@string/content_short_description"/>
 
