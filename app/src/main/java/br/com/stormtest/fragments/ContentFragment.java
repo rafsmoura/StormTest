@@ -73,6 +73,11 @@ public class ContentFragment extends Fragment {
 
     public void setContent(List<Content> contents) {
         this.contents = contents;
+        if (recyclerViewAdapter != null && recyclerView != null) {
+            recyclerViewAdapter.setContents(contents);
+            recyclerView.getAdapter().notifyDataSetChanged();
+        }
+
     }
 
     public boolean isFavoriteFragment() {
